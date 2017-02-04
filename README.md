@@ -1,4 +1,4 @@
-# DEEP-ML.COM meetupa.
+# DEEP-ML.COM meetups.
 
 A central repository for all my meetup projects.
 
