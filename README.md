@@ -3,6 +3,8 @@
 A central repository for all my meetup projects.
 
 ## My Book
+http://deep-ml.com/My%20Book/
+
 A handbook of data science interview questions.
 
 In this practical data science interview preparation hand- book , you will face challenging interview questions in Data Science, Statistical Machine Learning, Probability, Statistics and Deep Learning. I have dedicated countless hours after work assembling this booklet, hoping to help candidates excel at their data science interview.
