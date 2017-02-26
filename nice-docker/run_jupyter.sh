@@ -14,5 +14,6 @@
 # limitations under the License.
 # ==============================================================================
 
-
+pwd
+ls -la
 jupyter notebook "$@"
