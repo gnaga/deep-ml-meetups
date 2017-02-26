@@ -18,7 +18,7 @@ On top of all the fancy deep learning libraries, this docker image contains:
 
 # Get the image
 
-docker pull floydhub/dl-docker:cpu
+docker pull quantscientist/bayes-docker:cpu
 
 # Build the image
 
