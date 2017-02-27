@@ -18,8 +18,8 @@ On top of all the fancy deep learning libraries, this docker image contains:
 
 # Get the image
 
-docker pull quantscientist/bayes-docker:cpu
+docker pull quantscientist/deep-bayes
 
 # Build the image
 
-docker build -t quantscientist/bayes-docker:cpu -f Dockerfile.cpu .
+docker build -t docker pull quantscientist/deep-bayes -f Dockerfile.cpu .
