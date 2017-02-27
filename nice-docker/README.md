@@ -1,5 +1,7 @@
 # All-in-one Docker image for Deep Learning and Bayesian Machine Learning
 
+https://hub.docker.com/r/quantscientist/deep-ml-meetups/
+
 Image based on:
 https://github.com/floydhub/dl-docker
 
