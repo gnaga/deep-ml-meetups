@@ -23,3 +23,5 @@ docker pull quantscientist/deep-bayes
 # Build the image
 
 docker build -t docker pull quantscientist/deep-bayes -f Dockerfile.cpu .
+
+See https://github.com/docker/dceu_tutorials/blob/master/08-Automated-builds.md
