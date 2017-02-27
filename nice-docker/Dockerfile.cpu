@@ -112,22 +112,22 @@ RUN curl -O https://bootstrap.pypa.io/get-pip.py && \
 ############
 
 # First install zmq3:
-RUN apt-get install -y libzmq3-dbg libzmq3-dev libzmq3
+#RUN apt-get install -y libzmq3-dbg libzmq3-dev libzmq3
 
 # Then IPython proper:
-RUN apt-get install -y python-pip python-dev python-yaml
-RUN pip install ipython jinja2 tornado pyzmq pandas rpy2
+#RUN apt-get install -y python-pip python-dev python-yaml
+#RUN pip install ipython jinja2 tornado pyzmq pandas rpy2
 
 #######
 #  R  #
 #######
 
-RUN apt-get install -y r-base r-base-dev r-recommended r-cran-rcpp libcurl4-gnutls-dev
-RUN Rscript -e "install.packages('Rserve',,'http://cran.us.r-project.org')"
-RUN Rscript -e "install.packages('ggplot2',,'http://cran.us.r-project.org')"
-RUN Rscript -e "install.packages('devtools',,'http://cran.us.r-project.org')"
-RUN Rscript -e "install.packages('RJSONIO',,'http://cran.us.r-project.org')"
-RUN Rscript -e "install.packages('RCurl',,'http://cran.us.r-project.org')"
+#RUN apt-get install -y r-base r-base-dev r-recommended r-cran-rcpp libcurl4-gnutls-dev
+#RUN Rscript -e "install.packages('Rserve',,'http://cran.us.r-project.org')"
+#RUN Rscript -e "install.packages('ggplot2',,'http://cran.us.r-project.org')"
+#RUN Rscript -e "install.packages('devtools',,'http://cran.us.r-project.org')"
+#RUN Rscript -e "install.packages('RJSONIO',,'http://cran.us.r-project.org')"
+#RUN Rscript -e "install.packages('RCurl',,'http://cran.us.r-project.org')"
 
 
 # Install useful Python packages using apt-get to avoid version incompatibilities with Tensorflow binary
