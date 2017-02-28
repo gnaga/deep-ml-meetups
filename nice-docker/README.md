@@ -24,6 +24,14 @@ On top of all the fancy deep learning libraries, this docker image contains:
 
 docker pull quantscientist/deep-ml-meetups
 
+# Run the image
+docker run -it -p 8888:8888  -v /my-host-data-science-folder/:/root/sharedfolder quantscientist/deep-ml-meetups bash
+
+# Run Jupyter
+chmod +x run_jupyter.sh
+./run_jupyter.sh
+
+ 
 # Build the image
 
 docker build -t docker pull quantscientist/deep-ml-meetups -f Dockerfile.cpu .
