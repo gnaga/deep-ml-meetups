@@ -2,6 +2,8 @@
 
 https://hub.docker.com/r/quantscientist/deep-ml-meetups/
 
+This image is built automaticaly by a docker hub automation process. 
+
 Image based on:
 https://github.com/floydhub/dl-docker
 
@@ -20,10 +22,10 @@ On top of all the fancy deep learning libraries, this docker image contains:
 
 # Get the image
 
-docker pull quantscientist/deep-bayes
+docker pull quantscientist/deep-ml-meetups
 
 # Build the image
 
-docker build -t docker pull quantscientist/deep-bayes -f Dockerfile.cpu .
+docker build -t docker pull quantscientist/deep-ml-meetups -f Dockerfile.cpu .
 
 See https://github.com/docker/dceu_tutorials/blob/master/08-Automated-builds.md
