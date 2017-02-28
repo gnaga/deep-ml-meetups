@@ -1,3 +1,14 @@
 # Workshop: Deep Learning with Google Cloud, TensorFlow & BigQuery
 
 Files for the Workshop: Deep Learning with Google Cloud, TensorFlow & BigQuery meetup https://www.meetup.com/DATA-SCIENCE-TLV/events/237858719/
+
+# Links:
+
+https://github.com/hunkim/DeepLearningZeroToAll
+
+http://nbviewer.jupyter.org/github/cs109-energy/cs109-energy.github.io/blob/master/iPython/Random%20Forests.ipynb
+
+https://github.com/tgjeon/TensorFlow-Tutorials-for-Time-Series
+
+http://nbviewer.jupyter.org/github/addfor/tutorials/blob/master/machine_learning/ml25v04_tensorflow_basics.ipynb
+
