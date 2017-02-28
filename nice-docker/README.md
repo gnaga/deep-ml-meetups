@@ -1,5 +1,7 @@
 # All-in-one Docker image for Deep Learning and Bayesian Machine Learning
 
+![Jup](jup.png)
+
 https://hub.docker.com/r/quantscientist/deep-ml-meetups/
 
 This image is built automaticaly by a docker hub automation process. 
@@ -10,7 +12,6 @@ https://github.com/floydhub/dl-docker
 (Work In progress) 
 https://hub.docker.com/r/quantscientist/www.deep-ml.com/ 
 
-![Building the image](nice-docker.png)
 
 # Image contents
 On top of all the fancy deep learning libraries, this docker image contains:
@@ -30,10 +31,14 @@ docker run -it -p 8888:8888  -v /my-host-data-science-folder/:/root/sharedfolder
 # Run Jupyter
 chmod +x run_jupyter.sh
 ./run_jupyter.sh
-
+![Jup](start.png)
  
 # Build the image
 
 docker build -t docker pull quantscientist/deep-ml-meetups -f Dockerfile.cpu .
 
+![Building the image](nice-docker.png)
+
 See https://github.com/docker/dceu_tutorials/blob/master/08-Automated-builds.md
+
+
