@@ -197,7 +197,7 @@ RUN pip --no-cache-dir install git+git://github.com/fchollet/keras.git@${KERAS_V
 RUN pip --no-cache-dir install --upgrade pymc3 pystan edward fbprophet
 
 # Other utils
-RUN pip --no-cache-dir install --upgrade watermark xgboost bokeh
+RUN pip --no-cache-dir install --upgrade watermark xgboost bokeh seaborn mmh3
 
 
 
