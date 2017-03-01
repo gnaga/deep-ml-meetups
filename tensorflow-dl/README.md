@@ -1,6 +1,6 @@
 # Workshop: Deep Learning with Google Cloud, TensorFlow & BigQuery
 
-Files for the Workshop: Deep Learning with Google Cloud, TensorFlow & BigQuery meetup https://www.meetup.com/DATA-SCIENCE-TLV/events/237858719/
+Files for the Workshop: Deep Learning with TensorFlow meetup https://www.meetup.com/DATA-SCIENCE-TLV/events/237858719/
 
 # Links:
 
@@ -22,4 +22,12 @@ https://tebesu.github.io/posts/Training-a-TensorFlow-graph-in-C++-API
 
 https://github.com/PythonWorkshop/intro-to-tensorflow
 
+
+https://github.com/QuantScientist/serving/blob/master/tensorflow_serving/g3doc/serving_basic.md
+
+https://github.com/QuantScientist/deepdetect
+
+https://petewarden.com/2016/09/27/tensorflow-for-mobile-poets/
+
+http://jorditorres.org/first-contact-with-tensorflow/
 
