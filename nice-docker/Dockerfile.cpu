@@ -118,18 +118,6 @@ RUN curl -O https://bootstrap.pypa.io/get-pip.py && \
 	rm get-pip.py
 
 
-#######
-#  R  #
-#######
-
-RUN apt-get install -y r-base r-base-dev r-recommended r-cran-rcpp libcurl4-gnutls-dev
-RUN Rscript -e "install.packages('Rserve',,'http://cran.us.r-project.org')"
-RUN Rscript -e "install.packages('ggplot2',,'http://cran.us.r-project.org')"
-RUN Rscript -e "install.packages('devtools',,'http://cran.us.r-project.org')"
-RUN Rscript -e "install.packages('RJSONIO',,'http://cran.us.r-project.org')"
-RUN Rscript -e "install.packages('RCurl',,'http://cran.us.r-project.org')"
-
-
 # Install useful Python packages using apt-get to avoid version incompatibilities with Tensorflow binary
 # especially numpy, scipy, skimage and sklearn (see https://github.com/tensorflow/tensorflow/issues/2034)
 RUN apt-get update && apt-get install -y \
@@ -151,6 +139,7 @@ RUN apt-get update && apt-get install -y \
 RUN pip --no-cache-dir install --upgrade ipython && \
 	pip --no-cache-dir install \
 		Cython \
+		pydrill \
 		ipykernel \
 		jupyter \
 		path.py \
