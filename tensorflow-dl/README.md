@@ -12,3 +12,6 @@ https://github.com/tgjeon/TensorFlow-Tutorials-for-Time-Series
 
 http://nbviewer.jupyter.org/github/addfor/tutorials/blob/master/machine_learning/ml25v04_tensorflow_basics.ipynb
 
+https://github.com/nfmcclure/tensorflow_cookbook
+
+
