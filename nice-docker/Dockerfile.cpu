@@ -1,16 +1,19 @@
-FROM ubuntu:16.04
+#FROM ubuntu:16.04
 # FROM jfinmetrix/rhadley_ubuntu
+FROM ubuntu:trusty
 
 MAINTAINER Shlomo <shlomo@deep-ml.com>
+
+# Enable PPA
+RUN apt-get update && apt-get install -y software-properties-common && add-apt-repository -y ppa:ubuntu-toolchain-r/test
+
+# install dev tools
+RUN apt-get install -y wget tar sudo
 
 #RUN apt-get update
 #RUN apt-get dist-upgrade -y
 
-#RUN apt-get install -y software-properties-common python-software-properties
-
-
-#RUN add-apt-repository -y ppa:webupd8team/java
-#RUN add-apt-repository -y ppa:marutter/rrutter
+RUN apt-get install -y software-properties-common python-software-properties
 
 #RUN apt-get update
 
@@ -22,6 +25,21 @@ ARG LASAGNE_VERSION=v0.1
 ARG TORCH_VERSION=latest
 ARG CAFFE_VERSION=master
 
+# Install pre-reqs
+RUN apt-get update && apt-get install -y \
+ build-essential \
+ git \
+ wget \
+ python2.7 \
+ python2.7-dev \
+ python3.4 \
+ python3.4-dev \
+ libbz2-dev \
+ zlib1g-dev
+RUN cd /usr/bin && ln -s python2.7 python
+
+# Install Tool
+RUN apt-get update && apt-get install -y gcc-6 g++-6
 
 # Install some dependencies
 RUN apt-get update && apt-get install -y \
@@ -99,18 +117,6 @@ RUN curl -O https://bootstrap.pypa.io/get-pip.py && \
 	python get-pip.py && \
 	rm get-pip.py
 
-
-##########
-#  Java  #
-##########
-
-#RUN echo debconf shared/accepted-oracle-license-v1-1 select true | debconf-set-selections
-#RUN apt-get install -y oracle-java7-installer
-
-############
-#  Python  #
-############
-
 # First install zmq3:
 #RUN apt-get install -y libzmq3-dbg libzmq3-dev libzmq3
 
@@ -122,12 +128,12 @@ RUN curl -O https://bootstrap.pypa.io/get-pip.py && \
 #  R  #
 #######
 
-#RUN apt-get install -y r-base r-base-dev r-recommended r-cran-rcpp libcurl4-gnutls-dev
-#RUN Rscript -e "install.packages('Rserve',,'http://cran.us.r-project.org')"
-#RUN Rscript -e "install.packages('ggplot2',,'http://cran.us.r-project.org')"
-#RUN Rscript -e "install.packages('devtools',,'http://cran.us.r-project.org')"
-#RUN Rscript -e "install.packages('RJSONIO',,'http://cran.us.r-project.org')"
-#RUN Rscript -e "install.packages('RCurl',,'http://cran.us.r-project.org')"
+RUN apt-get install -y r-base r-base-dev r-recommended r-cran-rcpp libcurl4-gnutls-dev
+RUN Rscript -e "install.packages('Rserve',,'http://cran.us.r-project.org')"
+RUN Rscript -e "install.packages('ggplot2',,'http://cran.us.r-project.org')"
+RUN Rscript -e "install.packages('devtools',,'http://cran.us.r-project.org')"
+RUN Rscript -e "install.packages('RJSONIO',,'http://cran.us.r-project.org')"
+RUN Rscript -e "install.packages('RCurl',,'http://cran.us.r-project.org')"
 
 
 # Install useful Python packages using apt-get to avoid version incompatibilities with Tensorflow binary
@@ -207,8 +213,22 @@ COPY jupyter_notebook_config.py /root/.jupyter/
 # Jupyter has issues with being run directly: https://github.com/ipython/ipython/issues/7062
 COPY run_jupyter.sh /root/
 
+# get drill
+RUN wget http://getdrill.org/drill/download/apache-drill-0.6.0-incubating.tar.gz
+# create Drill folder
+RUN sudo mkdir -p /opt/drill
+
+# extract Drill
+RUN sudo tar -xvzf apache-drill-0.6.0-incubating.tar.gz -C /opt/drill
+
+# add boostrap.sh
+ADD bootstrap.sh /etc/bootstrap.sh
+RUN chown root:root /etc/bootstrap.sh
+RUN chmod 700 /etc/bootstrap.sh
+ENV BOOTSTRAP /etc/bootstrap.sh
+
 # Expose Ports for TensorBoard (6006), Ipython (8888)
-EXPOSE 6006 8888
+EXPOSE 6006 8888 8047
 
 WORKDIR "/root"
 CMD ["/bin/bash"]
