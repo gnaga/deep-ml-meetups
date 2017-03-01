@@ -31,3 +31,6 @@ https://petewarden.com/2016/09/27/tensorflow-for-mobile-poets/
 
 http://jorditorres.org/first-contact-with-tensorflow/
 
+http://nasdag.github.io/blog/2016/01/19/classifying-bees-with-google-tensorflow/
+
+
