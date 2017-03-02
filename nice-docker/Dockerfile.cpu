@@ -196,21 +196,7 @@ COPY jupyter_notebook_config.py /root/.jupyter/
 # Jupyter has issues with being run directly: https://github.com/ipython/ipython/issues/7062
 COPY run_jupyter.sh /root/
 
-# get drill
-RUN wget http://getdrill.org/drill/download/apache-drill-0.6.0-incubating.tar.gz
-# create Drill folder
-RUN sudo mkdir -p /opt/drill
-
-# extract Drill
-RUN sudo tar -xvzf apache-drill-0.6.0-incubating.tar.gz -C /opt/drill
-
-# add boostrap.sh
-ADD bootstrap.sh /etc/bootstrap.sh
-RUN chown root:root /etc/bootstrap.sh
-RUN chmod 700 /etc/bootstrap.sh
-ENV BOOTSTRAP /etc/bootstrap.sh
-
-# Expose Ports for TensorBoard (6006), Ipython (8888)
+# Expose Ports for TensorBoard (6006), Ipython (8888) drill 
 EXPOSE 6006 8888 8047
 
 WORKDIR "/root"
