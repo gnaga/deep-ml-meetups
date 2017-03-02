@@ -185,8 +185,14 @@ RUN apt-get update && apt-get install -y \
 # Install BAYESIAN FRAMEWORKS
 RUN pip --no-cache-dir install --upgrade pymc3 pystan edward fbprophet
 
+#RUN apt-get install build-essential llvm
+#RUN pip --no-cache-dir install --upgrade install llvmpy
+#RUN pip --no-cache-dir install --upgrade install cython
+#RUN pip --no-cache-dir install --upgrade install numba fastparquet
+
+#Try setting LLVM_CONFIG_PATH=/path/to/llvm-config
 # Other utils
-RUN pip --no-cache-dir install --upgrade watermark xgboost bokeh seaborn mmh3
+RUN pip --no-cache-dir install --upgrade watermark xgboost bokeh seaborn mmh3 
 
 
 
