@@ -209,6 +209,5 @@ RUN chmod +x /root/run_jupyter.sh
 EXPOSE 6006 8888 8047
 
 WORKDIR "/root"
-CMD ["/bin/bash"]
 
-CMD ./root/run_jupyter.sh
+CMD ["/bin/bash", "-c", "./root/run_jupyter.sh"]
