@@ -5,6 +5,7 @@ FROM ubuntu:trusty
 
 MAINTAINER Shlomo <shlomo@deep-ml.com>
 
+ENV LLVM_CONFIG /usr/local/opt/llvm/bin/llvm-config
 
 # install py2-tf-cpu/gpu (Python 2, TensorFlow, CPU)
 
@@ -175,7 +176,11 @@ RUN pip --no-cache-dir install --no-dependencies git+https://github.com/fchollet
 RUN pip --no-cache-dir install  pymc3 pystan edward watermark xgboost bokeh seaborn mmh3
 
 # Distributed dataframes
-RUN pip --no-cache-dir install  dask numba fastparquet
+RUN pip --no-cache-dir numba
+RUN pip --no-cache-dir install  dask
+RUN pip --no-cache-dir fastparquet
+
+#please point LLVM_CONFIG to the path for llvm-config
 
 #RUN pip --no-cache-dir install  llvmpy
 RUN pip --no-cache-dir install  cython pytest
