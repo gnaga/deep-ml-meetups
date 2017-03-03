@@ -138,12 +138,13 @@ ENV KERAS_BACKEND=tensorflow
 RUN pip --no-cache-dir install --no-dependencies git+https://github.com/fchollet/keras.git@${KERAS_VERSION}
 
 
-RUN pip --no-cache-dir install --upgrade install llvmpy
-RUN pip --no-cache-dir install --upgrade install cython
+RUN apt-get install build-essential llvm clang
+
+RUN pip --no-cache-dir install --upgrade  llvmpy
+RUN pip --no-cache-dir install --upgrade  cython
 
 # Install BAYESIAN FRAMEWORKS
 RUN pip --no-cache-dir install --upgrade pymc3 pystan edward fbprophet watermark xgboost bokeh seaborn mmh3
-
 
 # Distributed dataframes
 RUN pip --no-cache-dir install --upgrade dask numba fastparquet
@@ -231,7 +232,7 @@ ENV PASSWD='sha1:98b767162d34:8da1bc3c75a0f29145769edc977375a373407824'
 
 
 
-RUN apt-get install build-essential llvm clang
+
 
 
 # dump package lists
