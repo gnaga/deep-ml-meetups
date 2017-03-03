@@ -8,25 +8,44 @@ MAINTAINER Shlomo <shlomo@deep-ml.com>
 #ENV LLVM_CONFIG /usr/local/opt/llvm/bin/llvm-config
 #ENV LLVM_CONFIG=/usr/lib/llvm-3.8/bin/llvm-config
 
+ARG DEBIAN_FRONTEND=noninteractive
+ENV DEBIAN_FRONTEND noninteractive
+
+
 #Install base dependencies
-RUN apt-get update && apt-get install -y git cmake build-essential libgoogle-glog-dev libgflags-dev libeigen3-dev libopencv-dev libcppnetlib-dev libboost-dev libboost-iostreams-dev libcurlpp-dev libcurl4-openssl-dev protobuf-compiler libopenblas-dev libhdf5-dev libprotobuf-dev libleveldb-dev libsnappy-dev liblmdb-dev libutfcpp-dev wget liblapack-dev fortran-compiler llvm-3.8-dev libedit-dev
+RUN apt-get update && apt-get install -y git wget cmake build-essential libgoogle-glog-dev libgflags-dev libeigen3-dev libopencv-dev libcppnetlib-dev libboost-dev libboost-iostreams-dev libcurlpp-dev libcurl4-openssl-dev protobuf-compiler libopenblas-dev libhdf5-dev libprotobuf-dev libleveldb-dev libsnappy-dev liblmdb-dev libutfcpp-dev wget liblapack-dev fortran-compiler  libedit-dev
 
 RUN apt-get update
 
+
+# Very complicated step, took me hours to make it works. this is required for fastparquet
+
+RUN echo "deb http://llvm.org/apt/trusty/ llvm-toolchain-trusty main \n\
+deb-src http://llvm.org/apt/trusty/ llvm-toolchain-trusty main \n\
+deb http://llvm.org/apt/trusty/ llvm-toolchain-trusty-3.7 main \n\
+deb-src http://llvm.org/apt/trusty/ llvm-toolchain-trusty-3.7 main" >> /etc/apt/sources.list
+
+RUN wget -O - http://llvm.org/apt/llvm-snapshot.gpg.key | apt-key add -
+
+RUN apt-get update && apt-get install -y clang-3.7 libclang-common-3.7-dev libclang-3.7-dev libclang1-3.7  libllvm-3.7-ocaml-dev libllvm3.7 lldb-3.7 llvm-3.7 llvm-3.7-dev llvm-3.7-runtime clang-modernize-3.7 clang-format-3.7 lldb-3.7-dev
+RUN apt-get clean
+RUN rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
+RUN echo "/usr/lib/llvm-3.7/lib/" >> /etc/ld.so.conf && ldconfig
+
+RUN npm install -g remark
+
+ENV LD_LIBRARY_PATH /usr/lib/llvm-3.7/lib/
+ENV LLVM_CONFIG /usr/lib/llvm-3.7/bin/llvm-config
 
 RUN sudo apt-get update -qq \
  && apt-get install --no-install-recommends -y \
     # install python 3
     build-essential \
-    clang-3.8 \
-    lldb-3.8 \
-    llvm-3.8 \
-    llvm-3.8-dev \
-    llvm-3.8-runtime \
-    python-clang-3.8 \
-    lldb-3.8-dev \
-    libclang-common-3.8-dev \
-    libclang-3.8-dev \
+    clang-3.7 \
+    lldb-3.7 \
+    llvm-3.7 \
+    python-clang-3.7 \
  && apt-get clean \
  && rm -rf /var/lib/apt/lists/*
 
@@ -163,8 +182,8 @@ RUN pip --no-cache-dir install --no-dependencies git+https://github.com/fchollet
 
 
 RUN pip install --upgrade pip
-ENV LLVM_CONFIG=/usr/lib/llvm-3.8/bin/llvm-config
-RUN pip install --egg git+git://github.com/numba/llvmlite@v0.11.0
+ENV LLVM_CONFIG=/usr/lib/llvm-3.7/bin/llvm-config
+RUN pip install llvmlite
 
 # Distributed dataframes
 RUN pip --no-cache-dir numba
