@@ -5,15 +5,13 @@ FROM ubuntu:trusty
 
 MAINTAINER Shlomo <shlomo@deep-ml.com>
 
-ENV LLVM_CONFIG /usr/local/opt/llvm/bin/llvm-config
-
-# install py2-tf-cpu/gpu (Python 2, TensorFlow, CPU)
+#ENV LLVM_CONFIG /usr/local/opt/llvm/bin/llvm-config
+#ENV LLVM_CONFIG=/usr/lib/llvm-3.8/bin/llvm-config
 
 #Install base dependencies
 RUN apt-get update && apt-get install -y git cmake build-essential libgoogle-glog-dev libgflags-dev libeigen3-dev libopencv-dev libcppnetlib-dev libboost-dev libboost-iostreams-dev libcurlpp-dev libcurl4-openssl-dev protobuf-compiler libopenblas-dev libhdf5-dev libprotobuf-dev libleveldb-dev libsnappy-dev liblmdb-dev libutfcpp-dev wget
 
-
-#RUN apt-add-repository "deb http://llvm.org/apt/trusty/ llvm-toolchain-trusty-3.8 main"
+RUN apt-get update && apt-get install liblapack-dev fortran-compiler llvm-3.8-dev libedit-dev
 
 RUN apt-get update
 
@@ -33,12 +31,6 @@ RUN sudo apt-get update -qq \
     libclang-3.8-dev \
  && apt-get clean \
  && rm -rf /var/lib/apt/lists/*
-
-
-#RUN apt-get install clang-3.8 clang-3.8-doc libclang-common-3.8-dev libclang-3.8-dev libclang1-3.8 libclang1-3.8-dbg libllvm-3.8-ocaml-dev libllvm3.8 libllvm3.8-dbg lldb-3.8 llvm-3.8 llvm-3.8-dev llvm-3.8-doc llvm-3.8-examples llvm-3.8-runtime clang-modernize-3.8 clang-format-3.8 python-clang-3.8 lldb-3.8-dev liblldb-3.8-dbg
-
-CMD which llvm
-CMD which clang
 
 
 #Install dependencies
@@ -172,8 +164,9 @@ ENV KERAS_BACKEND=tensorflow
 RUN pip --no-cache-dir install --no-dependencies git+https://github.com/fchollet/keras.git@${KERAS_VERSION}
 
 
-# Install BAYESIAN FRAMEWORKS
-RUN pip --no-cache-dir install  pymc3 pystan edward watermark xgboost bokeh seaborn mmh3
+RUN pip install --upgrade pip
+ENV LLVM_CONFIG=/usr/lib/llvm-3.8/bin/llvm-config
+RUN pip install --egg git+git://github.com/numba/llvmlite@v0.11.0
 
 # Distributed dataframes
 RUN pip --no-cache-dir numba
@@ -182,8 +175,12 @@ RUN pip --no-cache-dir fastparquet
 
 #please point LLVM_CONFIG to the path for llvm-config
 
-#RUN pip --no-cache-dir install  llvmpy
+RUN pip --no-cache-dir install  llvmpy
 RUN pip --no-cache-dir install  cython pytest
+
+
+# Install BAYESIAN FRAMEWORKS
+RUN pip --no-cache-dir install  pymc3 pystan edward watermark xgboost bokeh seaborn mmh3
 
 
 # dump package lists
@@ -191,81 +188,6 @@ RUN dpkg-query -l > /dpkg-query-l.txt \
  && pip2 freeze > /pip2-freeze.txt
 
 ####################################################PYTHON2########################################################
-
-
-
-####################################################PYTHON-3333333########################################################
-# install py3-tf-cpu/gpu (Python 3, TensorFlow, CPU/GPU)
-RUN apt-get update -qq \
- && apt-get install --no-install-recommends -y \
-    # install python 3
-    python3 \
-    python3-dev \
-    python3-pip \
-    python3-setuptools \
-    python3-virtualenv \
-    pkg-config \
-    # requirements for numpy
-    libopenblas-base \
-    python3-numpy \
-    python3-scipy \
-    # requirements for keras
-    python3-h5py \
-    python3-yaml \
-    python3-pydot \
-    python-matplotlib \
-    python-pillow \
-    python3-matplotlib \
-    python3-pillow \
- && apt-get clean \
- && rm -rf /var/lib/apt/lists/*
-
-RUN pip3 install pip3 --upgrade
-
-ARG TENSORFLOW_VERSION=0.12.0
-ARG TENSORFLOW_DEVICE=gpu
-ARG TENSORFLOW_APPEND=
-RUN pip3 --no-cache-dir install https://storage.googleapis.com/tensorflow/linux/${TENSORFLOW_DEVICE}/tensorflow${TENSORFLOW_APPEND}-${TENSORFLOW_VERSION}-cp35-cp35m-linux_x86_64.whl
-
-ARG KERAS_VERSION=1.2.0
-ENV KERAS_BACKEND=tensorflow
-RUN pip3 --no-cache-dir install git+https://github.com/fchollet/keras.git@${KERAS_VERSION}
-
-# install py3-th-cpu/gpu (Python 3, Theano, CPU/GPU)
-ARG THEANO_VERSION=0.8.2
-ENV THEANO_FLAGS='device=cpu,floatX=float32'
-RUN pip3 --no-cache-dir install git+https://github.com/Theano/Theano.git@rel-${THEANO_VERSION}
-
-
-
-# install additional python packages
-RUN pip --no-cache-dir install \
-    # jupyter notebook and ipython (Python 2)
-    ipython \
-    ipykernel \
-    jupyter \
-    # data analysis (Python 2)
-    pandas \
-    scikit-learn \
-    statsmodels \
- && python -m ipykernel.kernelspec \
- && pip3 --no-cache-dir install \
-    # jupyter notebook and ipython (Python 3)
-    ipython \
-    ipykernel \
-    # data analysis (Python 3)
-    pandas \
-    scikit-learn \
-    statsmodels \
- && python3 -m ipykernel.kernelspec
-
-# configure console
-RUN echo 'alias ll="ls --color=auto -lA"' >> /root/.bashrc \
- && echo '"\e[5~": history-search-backward' >> /root/.inputrc \
- && echo '"\e[6~": history-search-forward' >> /root/.inputrc
-# default password: keras
-ENV PASSWD='sha1:98b767162d34:8da1bc3c75a0f29145769edc977375a373407824'
-
 
 
 
