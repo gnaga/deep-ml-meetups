@@ -11,6 +11,38 @@ MAINTAINER Shlomo <shlomo@deep-ml.com>
 #Install base dependencies
 RUN apt-get update && apt-get install -y git cmake build-essential libgoogle-glog-dev libgflags-dev libeigen3-dev libopencv-dev libcppnetlib-dev libboost-dev libboost-iostreams-dev libcurlpp-dev libcurl4-openssl-dev protobuf-compiler libopenblas-dev libhdf5-dev libprotobuf-dev libleveldb-dev libsnappy-dev liblmdb-dev libutfcpp-dev wget
 
+
+RUN apt-add-repository "deb http://llvm.org/apt/trusty/ llvm-toolchain-trusty-3.8 main"
+
+RUN apt-get update
+
+
+RUN sudo apt-get update -qq \
+ && apt-get install --no-install-recommends -y \
+    # install python 3
+    build-essential \
+    clang-3.8 \
+    lldb-3.8 \
+    llvm-3.8 \
+    llvm-3.8-dev \
+    llvm-3.8-runtime \
+    python-clang-3.8 \
+    lldb-3.8-dev \
+    libclang-common-3.8-dev \
+    libclang-3.8-dev \
+ && apt-get clean \
+ && rm -rf /var/lib/apt/lists/*
+
+
+#RUN apt-get install clang-3.8 clang-3.8-doc libclang-common-3.8-dev libclang-3.8-dev libclang1-3.8 libclang1-3.8-dbg libllvm-3.8-ocaml-dev libllvm3.8 libllvm3.8-dbg lldb-3.8 llvm-3.8 llvm-3.8-dev llvm-3.8-doc llvm-3.8-examples llvm-3.8-runtime clang-modernize-3.8 clang-format-3.8 python-clang-3.8 lldb-3.8-dev liblldb-3.8-dbg
+
+CMD which llvm
+CMD which clang
+
+#RUN pip --no-cache-dir install  llvmpy
+RUN pip --no-cache-dir install  cython
+
+
 #Install dependencies
 RUN apt-get update && apt-get install --no-install-recommends  -y \
         # install essentials
@@ -137,33 +169,6 @@ ARG KERAS_VERSION=1.2.2
 ENV KERAS_BACKEND=tensorflow
 RUN pip --no-cache-dir install --no-dependencies git+https://github.com/fchollet/keras.git@${KERAS_VERSION}
 
-
-RUN apt-add-repository "deb http://llvm.org/apt/trusty/ llvm-toolchain-trusty-3.8 main"
-
-RUN apt-get update
-
-
-RUN apt-get update -qq \
- && apt-get install --no-install-recommends -y \
-    # install python 3
-    build-essential \
-    clang-3.8 \
-    lldb-3.8 \
-    llvm-3.8 \
-    llvm-3.8-dev \
-    llvm-3.8-runtime \
-    python-clang-3.8 \
-    lldb-3.8-dev \
-    libclang-common-3.8-dev \
-    libclang-3.8-dev \
- && apt-get clean \
- && rm -rf /var/lib/apt/lists/*
-
-
-#RUN apt-get install clang-3.8 clang-3.8-doc libclang-common-3.8-dev libclang-3.8-dev libclang1-3.8 libclang1-3.8-dbg libllvm-3.8-ocaml-dev libllvm3.8 libllvm3.8-dbg lldb-3.8 llvm-3.8 llvm-3.8-dev llvm-3.8-doc llvm-3.8-examples llvm-3.8-runtime clang-modernize-3.8 clang-format-3.8 python-clang-3.8 lldb-3.8-dev liblldb-3.8-dbg
-
-RUN pip --no-cache-dir install  llvmpy
-RUN pip --no-cache-dir install  cython
 
 # Install BAYESIAN FRAMEWORKS
 RUN pip --no-cache-dir install  pymc3 pystan edward fbprophet watermark xgboost bokeh seaborn mmh3
