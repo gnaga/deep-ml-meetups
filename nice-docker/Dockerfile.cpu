@@ -9,9 +9,7 @@ MAINTAINER Shlomo <shlomo@deep-ml.com>
 #ENV LLVM_CONFIG=/usr/lib/llvm-3.8/bin/llvm-config
 
 #Install base dependencies
-RUN apt-get update && apt-get install -y git cmake build-essential libgoogle-glog-dev libgflags-dev libeigen3-dev libopencv-dev libcppnetlib-dev libboost-dev libboost-iostreams-dev libcurlpp-dev libcurl4-openssl-dev protobuf-compiler libopenblas-dev libhdf5-dev libprotobuf-dev libleveldb-dev libsnappy-dev liblmdb-dev libutfcpp-dev wget
-
-RUN apt-get update && apt-get install liblapack-dev fortran-compiler llvm-3.8-dev libedit-dev
+RUN apt-get update && apt-get install -y git cmake build-essential libgoogle-glog-dev libgflags-dev libeigen3-dev libopencv-dev libcppnetlib-dev libboost-dev libboost-iostreams-dev libcurlpp-dev libcurl4-openssl-dev protobuf-compiler libopenblas-dev libhdf5-dev libprotobuf-dev libleveldb-dev libsnappy-dev liblmdb-dev libutfcpp-dev wget liblapack-dev fortran-compiler llvm-3.8-dev libedit-dev
 
 RUN apt-get update
 
