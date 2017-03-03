@@ -1,7 +1,7 @@
 #FROM ubuntu:16.04
 # FROM jfinmetrix/rhadley_ubuntu
-#FROM ubuntu:trusty
-FROM debian:stretch
+FROM ubuntu:trusty
+#FROM debian:stretch
 
 MAINTAINER Shlomo <shlomo@deep-ml.com>
 
