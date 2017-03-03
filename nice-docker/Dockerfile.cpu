@@ -152,8 +152,6 @@ RUN apt-get update -qq \
     llvm-3.8 \
     llvm-3.8-dev \
     llvm-3.8-runtime \
-    clang-modernize-3.8 \
-    clang-format-3.8 \
     python-clang-3.8 \
     lldb-3.8-dev \
     libclang-common-3.8-dev \
