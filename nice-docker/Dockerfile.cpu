@@ -142,18 +142,36 @@ RUN apt-add-repository "deb http://llvm.org/apt/trusty/ llvm-toolchain-trusty-3.
 
 RUN apt-get update
 
-RUN apt-get install build-essential clang-3.8 lldb-3.8
 
-RUN apt-get install clang-3.8 clang-3.8-doc libclang-common-3.8-dev libclang-3.8-dev libclang1-3.8 libclang1-3.8-dbg libllvm-3.8-ocaml-dev libllvm3.8 libllvm3.8-dbg lldb-3.8 llvm-3.8 llvm-3.8-dev llvm-3.8-doc llvm-3.8-examples llvm-3.8-runtime clang-modernize-3.8 clang-format-3.8 python-clang-3.8 lldb-3.8-dev liblldb-3.8-dbg
+RUN apt-get update -qq \
+ && apt-get install --no-install-recommends -y \
+    # install python 3
+    build-essential \
+    clang-3.8 \
+    lldb-3.8 \
+    llvm-3.8 \
+    llvm-3.8-dev \
+    llvm-3.8-runtime \
+    clang-modernize-3.8 \
+    clang-format-3.8 \
+    python-clang-3.8 \
+    lldb-3.8-dev \
+    libclang-common-3.8-dev \
+    libclang-3.8-dev \
+ && apt-get clean \
+ && rm -rf /var/lib/apt/lists/*
 
-RUN pip --no-cache-dir install --upgrade  llvmpy
-RUN pip --no-cache-dir install --upgrade  cython
+
+#RUN apt-get install clang-3.8 clang-3.8-doc libclang-common-3.8-dev libclang-3.8-dev libclang1-3.8 libclang1-3.8-dbg libllvm-3.8-ocaml-dev libllvm3.8 libllvm3.8-dbg lldb-3.8 llvm-3.8 llvm-3.8-dev llvm-3.8-doc llvm-3.8-examples llvm-3.8-runtime clang-modernize-3.8 clang-format-3.8 python-clang-3.8 lldb-3.8-dev liblldb-3.8-dbg
+
+RUN pip --no-cache-dir install  llvmpy
+RUN pip --no-cache-dir install  cython
 
 # Install BAYESIAN FRAMEWORKS
-RUN pip --no-cache-dir install --upgrade pymc3 pystan edward fbprophet watermark xgboost bokeh seaborn mmh3
+RUN pip --no-cache-dir install  pymc3 pystan edward fbprophet watermark xgboost bokeh seaborn mmh3
 
 # Distributed dataframes
-RUN pip --no-cache-dir install --upgrade dask numba fastparquet
+RUN pip --no-cache-dir install  dask numba fastparquet
 
 
 # dump package lists
