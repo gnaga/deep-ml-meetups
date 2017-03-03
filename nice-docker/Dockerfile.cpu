@@ -12,7 +12,7 @@ MAINTAINER Shlomo <shlomo@deep-ml.com>
 RUN apt-get update && apt-get install -y git cmake build-essential libgoogle-glog-dev libgflags-dev libeigen3-dev libopencv-dev libcppnetlib-dev libboost-dev libboost-iostreams-dev libcurlpp-dev libcurl4-openssl-dev protobuf-compiler libopenblas-dev libhdf5-dev libprotobuf-dev libleveldb-dev libsnappy-dev liblmdb-dev libutfcpp-dev wget
 
 
-RUN apt-add-repository "deb http://llvm.org/apt/trusty/ llvm-toolchain-trusty-3.8 main"
+#RUN apt-add-repository "deb http://llvm.org/apt/trusty/ llvm-toolchain-trusty-3.8 main"
 
 RUN apt-get update
 
@@ -38,9 +38,6 @@ RUN sudo apt-get update -qq \
 
 CMD which llvm
 CMD which clang
-
-#RUN pip --no-cache-dir install  llvmpy
-RUN pip --no-cache-dir install  cython
 
 
 #Install dependencies
@@ -141,7 +138,11 @@ RUN apt-get update -qq \
  && apt-get clean \
  && rm -rf /var/lib/apt/lists/*
 
+RUN pip install setuptools pyOpenSSL ndg-httpsclient pyasn1
 RUN pip install pip --upgrade
+
+#RUN pip install urllib3[secure]
+
 
 # system level python 2 libs
 RUN apt-get update && apt-get install -y \
@@ -171,10 +172,13 @@ RUN pip --no-cache-dir install --no-dependencies git+https://github.com/fchollet
 
 
 # Install BAYESIAN FRAMEWORKS
-RUN pip --no-cache-dir install  pymc3 pystan edward fbprophet watermark xgboost bokeh seaborn mmh3
+RUN pip --no-cache-dir install  pymc3 pystan edward watermark xgboost bokeh seaborn mmh3
 
 # Distributed dataframes
 RUN pip --no-cache-dir install  dask numba fastparquet
+
+#RUN pip --no-cache-dir install  llvmpy
+RUN pip --no-cache-dir install  cython pytest
 
 
 # dump package lists
