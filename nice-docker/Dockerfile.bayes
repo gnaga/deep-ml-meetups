@@ -5,46 +5,25 @@ FROM debian:stretch
 
 MAINTAINER Shlomo <shlomo@deep-ml.com>
 
-# install dev tools
-#RUN apt-get update && apt-get install -y software-properties-common wget tar  gcc-6 g++-6
-
 
 # install py2-tf-cpu/gpu (Python 2, TensorFlow, CPU)
 
-# install debian packages
-ENV DEBIAN_FRONTEND noninteractive
-RUN apt-get update -qq \
- && apt-get install --no-install-recommends -y \
-    # install essentials
-    build-essential \
-    g++ \
-    git \
-    # install python 2
-    python \
-    python-dev \
-    python-pip \
-    python-setuptools \
-    python-virtualenv \
-    python-wheel \
-    pkg-config \
-    # requirements for numpy
-    libopenblas-base \
-    python-numpy \
-    python-scipy \
-    # requirements for keras
-    python-h5py \
-    python-yaml \
-    python-pydot \
- && apt-get clean \
- && rm -rf /var/lib/apt/lists/*
 
-#Install some dependencies
-RUN apt-get update && apt-get install -y \
+
+#Install some more dependencies
+RUN apt-get update && apt-get install --no-install-recommends  -y \
+        # install essentials
+        build-essential \
+        software-properties-common \
+        g++ \
+        git \
+        wget \
+        tar \
+        git \
         imagemagick \
         curl \
 		bc \
 		htop\
-		build-essential \
 		cmake \
 		curl \
 		g++ \
@@ -63,9 +42,6 @@ RUN apt-get update && apt-get install -y \
 		libwebp-dev \
 		libzmq3-dev \
 		nano \
-		pkg-config \
-		python-dev \
-		software-properties-common \
 		unzip \
 		vim \
 		zlib1g-dev \
@@ -94,13 +70,12 @@ RUN apt-get update && apt-get install -y \
 		libxine2-dev \
 		libtbb-dev \
 		libeigen3-dev \
-		python-dev \
-		python-tk \
-		python-numpy \
-		python3-dev \
-		python3-tk \
-		python3-numpy \
 		doxygen \
+		less \
+        htop \
+        procps \
+        vim-tiny \
+        boost \
 		&& \
 	apt-get clean && \
 	apt-get autoremove && \
@@ -108,6 +83,48 @@ RUN apt-get update && apt-get install -y \
 # Link BLAS library to use OpenBLAS using the alternatives mechanism (https://www.scipy.org/scipylib/building/linux.html#debian-ubuntu)
 	update-alternatives --set libblas.so.3 /usr/lib/openblas-base/libblas.so.3
 
+
+####################################################PYTHON2########################################################
+# install debian packages
+ENV DEBIAN_FRONTEND noninteractive
+RUN apt-get update -qq \
+ && apt-get install --no-install-recommends -y \
+    # install python 2
+    python \
+    python-dev \
+    python-pip \
+    python-setuptools \
+    python-virtualenv \
+    python-wheel \
+	python-tk \
+    pkg-config \
+    # requirements for numpy
+    libopenblas-base \
+    python-numpy \
+    python-scipy \
+    # requirements for keras
+    python-h5py \
+    python-yaml \
+    python-pydot \
+ && apt-get clean \
+ && rm -rf /var/lib/apt/lists/*
+
+
+# system level python 2 libs
+RUN apt-get update && apt-get install -y \
+		python-numpy \
+		python-scipy \
+		python-nose \
+		python-h5py \
+		python-skimage \
+		python-matplotlib \
+		python-pandas \
+		python-sklearn \
+		python-sympy \
+		&& \
+	apt-get clean && \
+	apt-get autoremove && \
+	rm -rf /var/lib/apt/lists/*
 
 
 ARG TENSORFLOW_VERSION=0.11.0
@@ -119,12 +136,27 @@ ARG KERAS_VERSION=1.2.2
 ENV KERAS_BACKEND=tensorflow
 RUN pip --no-cache-dir install --no-dependencies git+https://github.com/fchollet/keras.git@${KERAS_VERSION}
 
+
+RUN pip --no-cache-dir install --upgrade install llvmpy
+RUN pip --no-cache-dir install --upgrade install cython
+
+# Install BAYESIAN FRAMEWORKS
+RUN pip --no-cache-dir install --upgrade pymc3 pystan edward fbprophet watermark xgboost bokeh seaborn mmh3
+
+
+# Distributed dataframes
+RUN pip --no-cache-dir install --upgrade dask numba fastparquet
+
+
 # dump package lists
 RUN dpkg-query -l > /dpkg-query-l.txt \
  && pip2 freeze > /pip2-freeze.txt
 
+####################################################PYTHON2########################################################
 
 
+
+####################################################PYTHON-3333333########################################################
 # install py3-tf-cpu/gpu (Python 3, TensorFlow, CPU/GPU)
 RUN apt-get update -qq \
  && apt-get install --no-install-recommends -y \
@@ -143,6 +175,10 @@ RUN apt-get update -qq \
     python3-h5py \
     python3-yaml \
     python3-pydot \
+    python-matplotlib \
+    python-pillow \
+    python3-matplotlib \
+    python3-pillow \
  && apt-get clean \
  && rm -rf /var/lib/apt/lists/*
 
@@ -159,24 +195,6 @@ RUN pip3 --no-cache-dir install git+https://github.com/fchollet/keras.git@${KERA
 ARG THEANO_VERSION=0.8.2
 ENV THEANO_FLAGS='device=cpu,floatX=float32'
 RUN pip3 --no-cache-dir install git+https://github.com/Theano/Theano.git@rel-${THEANO_VERSION}
-
-# install additional debian packages
-RUN apt-get update -qq \
- && apt-get install --no-install-recommends -y \
-    # system tools
-    less \
-    nano \
-    htop \
-    procps \
-    vim-tiny \
-    # visualization (Python 2 and 3)
-    python-matplotlib \
-    python-pillow \
-    python3-matplotlib \
-    python3-pillow \
- && apt-get clean \
- && rm -rf /var/lib/apt/lists/*
-
 
 
 
@@ -208,6 +226,11 @@ RUN echo 'alias ll="ls --color=auto -lA"' >> /root/.bashrc \
 # default password: keras
 ENV PASSWD='sha1:98b767162d34:8da1bc3c75a0f29145769edc977375a373407824'
 
+
+
+RUN apt-get install build-essential llvm clang
+
+
 # dump package lists
 RUN dpkg-query -l > /dpkg-query-l.txt \
  && pip2 freeze > /pip2-freeze.txt \
@@ -217,6 +240,22 @@ RUN dpkg-query -l > /dpkg-query-l.txt \
 EXPOSE 8888
 # for tensorboard
 EXPOSE 6006
+
+
+# Set up notebook config
+COPY jupyter_notebook_config.py /root/.jupyter/
+
+# Jupyter has issues with being run directly: https://github.com/ipython/ipython/issues/7062
+COPY run_jupyter.sh /root/
+RUN chmod +x /root/run_jupyter.sh
+
+# Expose Ports for TensorBoard (6006), Ipython (8888) drill
+#EXPOSE 6006 8888 8047
+
+#WORKDIR "/root"
+
+#CMD ["/bin/bash", "-c", "./root/run_jupyter.sh"]
+
 
 WORKDIR /srv/
 CMD /bin/bash -c 'jupyter notebook --no-browser --ip=* --NotebookApp.password="$PASSWD" "$@"'
