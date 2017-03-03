@@ -138,7 +138,13 @@ ENV KERAS_BACKEND=tensorflow
 RUN pip --no-cache-dir install --no-dependencies git+https://github.com/fchollet/keras.git@${KERAS_VERSION}
 
 
-RUN apt-get install build-essential llvm clang
+RUN apt-add-repository "deb http://llvm.org/apt/trusty/ llvm-toolchain-trusty-3.8 main"
+
+RUN apt-get update
+
+RUN apt-get install build-essential clang-3.8 lldb-3.8
+
+RUN apt-get install clang-3.8 clang-3.8-doc libclang-common-3.8-dev libclang-3.8-dev libclang1-3.8 libclang1-3.8-dbg libllvm-3.8-ocaml-dev libllvm3.8 libllvm3.8-dbg lldb-3.8 llvm-3.8 llvm-3.8-dev llvm-3.8-doc llvm-3.8-examples llvm-3.8-runtime clang-modernize-3.8 clang-format-3.8 python-clang-3.8 lldb-3.8-dev liblldb-3.8-dbg
 
 RUN pip --no-cache-dir install --upgrade  llvmpy
 RUN pip --no-cache-dir install --upgrade  cython
