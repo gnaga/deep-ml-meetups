@@ -8,9 +8,10 @@ MAINTAINER Shlomo <shlomo@deep-ml.com>
 
 # install py2-tf-cpu/gpu (Python 2, TensorFlow, CPU)
 
+#Install base dependencies
+RUN apt-get update && apt-get install -y git cmake build-essential libgoogle-glog-dev libgflags-dev libeigen3-dev libopencv-dev libcppnetlib-dev libboost-dev libboost-iostreams-dev libcurlpp-dev libcurl4-openssl-dev protobuf-compiler libopenblas-dev libhdf5-dev libprotobuf-dev libleveldb-dev libsnappy-dev liblmdb-dev libutfcpp-dev wget
 
-
-#Install some more dependencies
+#Install dependencies
 RUN apt-get update && apt-get install --no-install-recommends  -y \
         # install essentials
         build-essential \
