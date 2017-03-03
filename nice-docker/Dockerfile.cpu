@@ -33,7 +33,6 @@ RUN rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 RUN echo "/usr/lib/llvm-3.7/lib/" >> /etc/ld.so.conf && ldconfig
 
-RUN npm install -g remark
 
 ENV LD_LIBRARY_PATH /usr/lib/llvm-3.7/lib/
 ENV LLVM_CONFIG /usr/lib/llvm-3.7/bin/llvm-config
