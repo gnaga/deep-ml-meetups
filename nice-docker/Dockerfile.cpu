@@ -74,7 +74,7 @@ RUN apt-get update && apt-get install --no-install-recommends  -y \
         htop \
         procps \
         vim-tiny \
-        boost \
+        libboost-dev \
 		&& \
 	apt-get clean && \
 	apt-get autoremove && \
