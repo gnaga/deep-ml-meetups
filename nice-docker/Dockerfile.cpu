@@ -186,7 +186,7 @@ ENV LD_LIBRARY_PATH /usr/lib/llvm-3.7/lib/
 ENV LLVM_CONFIG /usr/lib/llvm-3.7/bin/llvm-config
 
 
-RUN pip --no-cache-dir install  cython pytest pandas scikit-learn statsmodels line-profiler psutil memory_profiler pandas ipython[all] jupyter joblib pyparsing pydot pydot-ng graphviz pandoc SQLAlchemy flask toolz cloudpickle python-snappy s3fs widgetsnbextension
+RUN pip --no-cache-dir install  cython pytest pandas scikit-learn statsmodels line-profiler psutil memory_profiler pandas ipython[all] jupyter joblib pyparsing pydot pydot-ng graphviz pandoc SQLAlchemy flask toolz cloudpickle python-snappy s3fs widgetsnbextension ipywidgets terminado
 RUN pip install --upgrade pip
 
 RUN pip install -i https://pypi.anaconda.org/sklam/simple llvmlite
@@ -195,7 +195,9 @@ RUN pip install -i https://pypi.anaconda.org/sklam/simple llvmlite
 
 # Distributed dataframes
 RUN pip --no-cache-dir install numba
-RUN pip --no-cache-dir install dask distributed
+RUN pip --no-cache-dir install git+https://github.com/dask/dask.git
+RUN pip --no-cache-dir install git+https://github.com/dask/distributed.git
+
 RUN pip --no-cache-dir install fastparquet
 
 #please point LLVM_CONFIG to the path for llvm-config
@@ -312,5 +314,7 @@ RUN chmod +x run_jupyter.sh
 RUN ls -la
 
 ##RUN ./run_jupyter.sh
+
+#CMD daskd-scheduler &
 
 #CMD ["/bin/bash", "-c", "./run_jupyter.sh"]
