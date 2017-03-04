@@ -16,4 +16,10 @@
 
 pwd
 ls -la
-jupyter notebook "$@"
+
+NCPUS=`python -c "import multiprocessing as mp; print(mp.cpu_count())"`
+echo "Detected $NCPUS cpus"
+
+dask-scheduler --host localhost &
+dworker loaclhost:8786 $* &
+jupyter notebook "$@" &
