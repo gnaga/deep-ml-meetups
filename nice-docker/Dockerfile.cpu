@@ -243,9 +243,7 @@ RUN apt-get update -qq \
 
 
 # install additional python packages
-RUN pip --no-cache-dir install \
- && python -m ipykernel.kernelspec \
- && pip3 --no-cache-dir install \
+RUN pip3 install \
     # jupyter notebook and ipython (Python 3)
     ipython \
     # data analysis (Python 3)
