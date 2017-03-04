@@ -299,15 +299,17 @@ COPY jupyter_notebook_config.py /root/.jupyter/
 
 # Jupyter has issues with being run directly: https://github.com/ipython/ipython/issues/7062
 COPY run_jupyter.sh /root/
-RUN chmod +x /root/run_jupyter.sh
+
 
 # Expose Ports for TensorBoard (6006), Ipython (8888) drill
-
-
-WORKDIR "/root"
-
 EXPOSE 6006 3838 8787 8888 8786
 
-CMD ["/bin/bash", "-c", "./root/run_jupyter.sh"]
+WORKDIR "/root"
+RUN pwd
+RUN df -k
+RUN chmod +x run_jupyter.sh
+RUN ls -la
 
-#CMD /bin/bash -c 'jupyter notebook --no-browser --ip=* --NotebookApp.password="$PASSWD" "$@"'
+##RUN ./run_jupyter.sh
+
+#CMD ["/bin/bash", "-c", "./run_jupyter.sh"]
