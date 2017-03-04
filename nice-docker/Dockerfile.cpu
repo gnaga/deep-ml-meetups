@@ -179,20 +179,25 @@ ARG KERAS_VERSION=1.2.2
 ENV KERAS_BACKEND=tensorflow
 RUN pip --no-cache-dir install --no-dependencies git+https://github.com/fchollet/keras.git@${KERAS_VERSION}
 
+ENV LD_LIBRARY_PATH /usr/lib/llvm-3.7/lib/
+ENV LLVM_CONFIG /usr/lib/llvm-3.7/bin/llvm-config
 
+RUN pip --no-cache-dir install  cython pytest
 RUN pip install --upgrade pip
-ENV LLVM_CONFIG=/usr/lib/llvm-3.7/bin/llvm-config
-RUN pip install llvmlite
+
+RUN pip install -i https://pypi.anaconda.org/sklam/simple llvmlite
+
+#RUN pip install llvmlite
 
 # Distributed dataframes
-RUN pip --no-cache-dir numba
-RUN pip --no-cache-dir install  dask
-RUN pip --no-cache-dir fastparquet
+RUN pip --no-cache-dir install numba
+RUN pip --no-cache-dir install dask
+RUN pip --no-cache-dir install fastparquet
 
 #please point LLVM_CONFIG to the path for llvm-config
 
-RUN pip --no-cache-dir install  llvmpy
-RUN pip --no-cache-dir install  cython pytest
+#RUN pip --no-cache-dir install  llvmpy
+
 
 
 # Install BAYESIAN FRAMEWORKS
