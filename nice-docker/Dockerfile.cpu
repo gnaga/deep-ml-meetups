@@ -186,7 +186,7 @@ ENV LD_LIBRARY_PATH /usr/lib/llvm-3.7/lib/
 ENV LLVM_CONFIG /usr/lib/llvm-3.7/bin/llvm-config
 
 
-RUN pip --no-cache-dir install  cython pytest pandas scikit-learn statsmodels line-profiler psutil memory_profiler pandas ipython[all] jupyter joblib pyparsing pydot pydot-ng graphviz pandoc SQLAlchemy flask toolz cloudpickle python-snappy s3fs
+RUN pip --no-cache-dir install  cython pytest pandas scikit-learn statsmodels line-profiler psutil memory_profiler pandas ipython[all] jupyter joblib pyparsing pydot pydot-ng graphviz pandoc SQLAlchemy flask toolz cloudpickle python-snappy s3fs widgetsnbextension
 RUN pip install --upgrade pip
 
 RUN pip install -i https://pypi.anaconda.org/sklam/simple llvmlite
@@ -300,6 +300,7 @@ COPY jupyter_notebook_config.py /root/.jupyter/
 # Jupyter has issues with being run directly: https://github.com/ipython/ipython/issues/7062
 COPY run_jupyter.sh /root/
 
+RUN jupyter nbextension enable --py --sys-prefix widgetsnbextension
 
 # Expose Ports for TensorBoard (6006), Ipython (8888) drill
 EXPOSE 6006 3838 8787 8888 8786
