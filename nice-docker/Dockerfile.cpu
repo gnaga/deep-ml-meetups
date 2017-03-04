@@ -242,26 +242,22 @@ RUN apt-get update -qq \
 #RUN pip3 install pip3 --upgrade
 
 
-# install additional python packages
-RUN pip3 install \
-    # jupyter notebook and ipython (Python 3)
-    ipython \
-    # data analysis (Python 3)
-    pandas \
-    scikit-learn \
-    statsmodels
-
 
 # Install R-Base
 RUN echo "deb http://cran.rstudio.com/bin/linux/ubuntu trusty/" >> /etc/apt/sources.list
 RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E084DAB9
 RUN apt-get update
 RUN apt-get install -y r-base
+RUN apt-get install r-base-dev
+RUN apt-get --no-install-recommends -y install gdebi-core libapparmor1
+RUN wget http://download2.rstudio.org/rstudio-server-0.98.1091-amd64.deb
+RUN gdebi rstudio-server-0.98.1091-amd64.deb
 
 # Install RblpAPI Dependencies
 RUN echo 'options(repos = c(CRAN = "https://cran.rstudio.com/"), download.file.method = "libcurl")' >> /etc/R/Rprofile.site
 RUN Rscript -e 'install.packages("BH",dependencies=TRUE)'
 RUN Rscript -e 'install.packages("Rcpp",dependencies=TRUE)'
+RUN Rscript -e 'install.packages("rstan",dependencies=TRUE)'
 
 
 # configure console
