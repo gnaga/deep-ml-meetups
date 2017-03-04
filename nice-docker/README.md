@@ -1,4 +1,4 @@
-# All-in-one Docker image for Deep Learning and Bayesian Machine Learning
+# All-in-one Docker image for Deep Learning, Bayesian Machine Learning and Distributed DataFrames
 
 ![Jup](jup.png)
 
@@ -20,6 +20,13 @@ On top of all the fancy deep learning libraries, this docker image contains:
 * PyMC3
 * Edward
 * FB Prophet
+
+* Dask
+* Fastparquet
+* LLVM
+* LLDB
+* Snappy
+* Numba
 
 # Get the image
 
