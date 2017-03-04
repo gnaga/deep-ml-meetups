@@ -195,7 +195,7 @@ RUN pip install -i https://pypi.anaconda.org/sklam/simple llvmlite
 
 # Distributed dataframes
 RUN pip --no-cache-dir install numba
-RUN pip --no-cache-dir install dask
+RUN pip --no-cache-dir install dask distributed
 RUN pip --no-cache-dir install fastparquet
 
 #please point LLVM_CONFIG to the path for llvm-config
