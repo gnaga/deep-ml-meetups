@@ -165,7 +165,6 @@ RUN apt-get update && apt-get install -y \
 		python-sklearn \
 		python-sympy \
 		ipython \
-        && python -m ipykernel.kernelspec \
 		&& \
 	apt-get clean && \
 	apt-get autoremove && \
@@ -252,9 +251,19 @@ RUN pip --no-cache-dir install \
     # data analysis (Python 3)
     pandas \
     scikit-learn \
-    statsmodels \
- && python3 -m ipykernel.kernelspec
+    statsmodels
 
+
+# Install R-Base
+RUN echo "deb http://cran.rstudio.com/bin/linux/ubuntu trusty/" >> /etc/apt/sources.list
+RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E084DAB9
+RUN apt-get update
+RUN apt-get install -y r-base
+
+# Install RblpAPI Dependencies
+RUN echo 'options(repos = c(CRAN = "https://cran.rstudio.com/"), download.file.method = "libcurl")' >> /etc/R/Rprofile.site
+RUN Rscript -e 'install.packages("BH",dependencies=TRUE)'
+RUN Rscript -e 'install.packages("Rcpp",dependencies=TRUE)'
 
 
 # configure console
