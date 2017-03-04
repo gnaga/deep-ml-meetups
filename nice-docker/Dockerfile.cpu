@@ -305,7 +305,7 @@ COPY run_jupyter.sh /root/
 RUN jupyter nbextension enable --py --sys-prefix widgetsnbextension
 
 # Expose Ports for TensorBoard (6006), Ipython (8888) drill
-EXPOSE 6006 3838 8787 8888 8786 9786
+EXPOSE 6006 3838 8787 8888 8786 9786 8788
 
 WORKDIR "/root"
 RUN pwd
