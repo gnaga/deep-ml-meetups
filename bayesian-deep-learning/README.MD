@@ -2,4 +2,4 @@
 
 
 
-[MEETUP LINK](https://www.meetup.com/DATA-SCIENCE-TLV/events/236635918/)
+[MEETUP LINK](https://www.meetup.com/TensorFlow-Tel-Aviv/events/236635918/)
