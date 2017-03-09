@@ -192,7 +192,7 @@ RUN pip install --upgrade pip
 RUN pip install -i https://pypi.anaconda.org/sklam/simple llvmlite
 
 #RUN pip install llvmlite
-RUN  apt-get install -y maven
+RUN apt-get install --no-install-recommends  -y maven
 RUN git clone https://github.com/prestodb/presto.git && cd presto && mvn clean install
 RUN pip install fbprophet
 
