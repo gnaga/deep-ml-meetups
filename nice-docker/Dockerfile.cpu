@@ -8,7 +8,7 @@ MAINTAINER Shlomo <shlomo@deep-ml.com>
 #ENV LLVM_CONFIG /usr/local/opt/llvm/bin/llvm-config
 #ENV LLVM_CONFIG=/usr/lib/llvm-3.8/bin/llvm-config
 
-ARG DEBIAN_FRONTEND=noninteractive
+#ARG DEBIAN_FRONTEND=noninteractive
 ENV DEBIAN_FRONTEND noninteractive
 
 
