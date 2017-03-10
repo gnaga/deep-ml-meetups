@@ -223,7 +223,7 @@ VOLUME "$USER_HOME_DIR/.m2"
 
 ENTRYPOINT ["/usr/local/bin/mvn-entrypoint.sh"]
 
-RUN git clone https://github.com/prestodb/presto.git && cd presto && mvn clean install
+#RUN git clone https://github.com/prestodb/presto.git && cd presto && mvn clean install
 
 # Distributed dataframes
 RUN pip --no-cache-dir install numba
